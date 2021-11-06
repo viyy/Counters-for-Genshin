@@ -1,0 +1,50 @@
+﻿@page "/counter"
+
+<div class="m-2 mb-3 bg-gray-600 shadow-md rounded w-1/4" style="min-width: 200px">
+  <div class="m-2">
+    @if (!IsShowEditor)
+    {
+      <div>
+        <button type="button" @onclick="ChangeStar" class="text-yellow-400 bg-transparent border-0"><i class="@(CModel.IsFiveStar?"fas":"far") fa-star"></i></button>
+        <button type="button" @onclick="ShowEditor" class="p-1 my-1 border-gray-600 border hover:border-green-500 rounded hover:bg-green-500 text-white">@CModel.Name</button>
+      </div>
+    }
+    else
+    {
+      <div class="flex flex-row flex-nowrap">
+        <input type="text" placeholder="Counter's name" @bind="CModel.Name" class="w-5/6 my-1 p-1 mr-0 border-r border-t border-b border-green-500 rounded-l"/>
+        <button type="button" @onclick="ShowEditor" class="w-1/6 my-1 ml-0 p-1 border-t border-b border-r border-green-500 rounded-r hover:bg-green-500 text-white">Ok</button>
+      </div>
+    }
+  </div>
+  <div>
+    <p class="text-6xl text-green-500 text-center mb-4">@CModel.Value</p>   
+    <div class="flex flex-row flex-nowrap justify-between">
+      <button type="button" class="py-2 w-1/2 text-3xl text-gray-500 border-t border-r border-gray-700" @onclick="DecrementCount"><i class="fas fa-minus"></i></button>
+      <button type="button" class="py-2 w-1/2 text-3xl text-green-500 border-t border-gray-700" @onclick="IncrementCount"><i class="fas fa-plus"></i></button>    
+    </div>    
+  </div>
+</div>
+
+
+@code {
+  [Parameter] public CounterModel CModel { get; set; } = new();
+  private bool IsShowEditor { get; set; } = false;
+
+  private void IncrementCount()
+  {
+    CModel.Value++;
+  }
+  private void DecrementCount()
+  {
+    CModel.Value--;
+  }
+  private void ShowEditor()
+  {
+    IsShowEditor = !IsShowEditor;
+  }
+  private void ChangeStar()
+  {
+    CModel.IsFiveStar = !CModel.IsFiveStar;
+  }
+}
